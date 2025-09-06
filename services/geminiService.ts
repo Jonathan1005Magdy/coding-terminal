@@ -55,3 +55,28 @@ export const askAIQuestion = async (question: string): Promise<string> => {
         return `An error occurred while communicating with the AI: ${error instanceof Error ? error.message : String(error)}`;
     }
 };
+
+export const getManPage = async (command: string): Promise<string> => {
+    if (!process.env.API_KEY) {
+        return "Error: API_KEY is not configured. AI features are disabled.";
+    }
+    try {
+        const prompt = `
+            You are a helpful assistant that provides Linux command documentation.
+            Generate a 'man page' for the command: \`${command}\`.
+            Format the output similarly to a traditional man page, including sections like NAME, SYNOPSIS, and DESCRIPTION.
+            Be concise and clear.
+        `;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                temperature: 0.2,
+            }
+        });
+        return response.text;
+    } catch (error) {
+        console.error(`Error getting man page for ${command}:`, error);
+        return `An error occurred while communicating with the AI: ${error instanceof Error ? error.message : String(error)}`;
+    }
+};
