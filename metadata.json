@@ -1,0 +1,5 @@
+{
+  "name": "Terminal",
+  "description": "A simulated Linux terminal environment in a React web application. It features a mock file system, a text editor, and integrates with the Gemini API to 'run' Python code and answer coding questions, providing a dynamic development sandbox experience.",
+  "requestFramePermissions": []
+}
